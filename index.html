@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Javiera Nahuelñir">
+
+<title>Trabajo R - Parte IV</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="index_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Trabajo R - Parte IV</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Javiera Nahuelñir </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="la-educación-cívica-parte-iv." class="level2">
+<h2 class="anchored" data-anchor-id="la-educación-cívica-parte-iv.">La educación cívica parte IV.</h2>
+<p>La educación cívica ha sido comprendida como un conjunto de conocimientos, habilidades y disposiciones orientadas a la formación de ciudadanos capaces de participar de manera informada y activa en la vida democrática. En este ámbito, no solo implica la adquisión de información sobre contenidos de instituciones políticas participantes dentro de nuestro país, sino que también el desarrollo de actitudes vinculadas al compromiso cívico y la participación política.</p>
+<p>En el caso de nuestro país, la importancia de la educación cívica ha sido reconocida institucionalmente mediante La Ley 20.911, promulgada en el 2016, durante el gobierno de Michelle Bachelet, la cual establece la implementación obligatoria de planes de formación ciudadana en los establecimientos educacionales . Esta ley cuenta con 9 objetivos principales, que sin embargo, 3 serán relevantes en esta investigación. Los cuales indican que La Ley 20.911 tiene como propositó:</p>
+<p>“Fomentar en los estudiantes el ejercico de una ciudadanía crítica, responsable, respetuosa, abierta y creativa”; “Promover el conocimiento, comprensión y análisis del Estado de Derecho y de la institucionalidad local, regional y nacional, y la formación de virtudes cívicas en los estudiantes”; “Fomentar la participación de los estudiantes en temas de interés público” (<a href="https://javieranahuelnir0-star.github.io/OPT.E-C/#ref-ley20.911"><em>Ley 20.911</em>, n.d.</a>)</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.5 1.0 2.5 2.5 1.5 1.0</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  1.000   1.000   1.667   1.965   2.333   5.000       2 </code></pre>
+</div>
+</div>
+</section>
+<section id="modelo-de-regresión-lineal" class="level2">
+<h2 class="anchored" data-anchor-id="modelo-de-regresión-lineal">Modelo de regresión lineal</h2>
+<p>Tras el análisis descriptivo y de correlaciones realizado en el trabajo anterior, se vuelve fundamental dar un paso hacia el análisis explicativo. Si bien las correlaciones previas nos permitieron identificar como se mueven las variables de manera conjunta, estas no logran determinar la magnitud ni la dirección del efecto de una variable sobre otra, ni tampoco aislar el dicho efecto cuando intervienen otros factores. En este sentido la regresión lineal, se constituye como una herramienta metodológica clave, esta técnica permitirá estimar de manera precisa la asociación entre el nivel educativo y el comportamiento político juvenil, evaluando si mayores niveles educacionales se relacionan con un mayor interés o participación política controlando por otras variables intervenientes.</p>
+<section id="estrategia-de-modelos" class="level3">
+<h3 class="anchored" data-anchor-id="estrategia-de-modelos">Estrategia de modelos</h3>
+<p>Para examinar de manera rigurosa el impacto de la educación en el comportamiento político juvenil, el análisis explicativo no se limitara a un único modelo, sino que se optara por una estrategia de modelación secuencial a través de la estimación de tres modelos de regresión lineal diferentes. Esta decisión fue tomada, ya que permite aislar el efecto de la variable explicativa principal y observar como se comporta al introducir algun factor de control.</p>
+<section id="modelo-1-educación" class="level4">
+<h4 class="anchored" data-anchor-id="modelo-1-educación">Modelo 1: Educación</h4>
+<p>En primer lugar, se estimará un modelo bivariado que incluye únicamente el índice de participación política en función del nivel educativo. El objetivo de este primer paso es evaluar el impacto directo de la educación, estableciendo una línea de base para conocer la magnitud y dirección de su efecto sin la intervención de otras variables</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = participacion_politica ~ educacion, data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.7778 -0.6631 -0.1930  0.4737  3.3369 
+
+Coefficients:
+                            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                  1.66312    0.03407  48.819  &lt; 2e-16 ***
+educacionBasica Incompleta   0.33760    0.06672   5.060 4.56e-07 ***
+educacionBasica Completa     0.19650    0.06102   3.220   0.0013 ** 
+educacionMedia Incompleta    0.68181    0.04957  13.755  &lt; 2e-16 ***
+educacionMedia Completa      0.65632    0.05669  11.578  &lt; 2e-16 ***
+educacionEducacion Superior  1.11466    0.19371   5.754 9.95e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.8739 on 2164 degrees of freedom
+  (324 observations deleted due to missingness)
+Multiple R-squared:  0.1073,    Adjusted R-squared:  0.1053 
+F-statistic: 52.04 on 5 and 2164 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_6e5l492nrf1bofqzmus1 = TinyTable.createTableFunctions("tinytable_6e5l492nrf1bofqzmus1");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '19', j: 2 } ], css_id: 'tinytable_css_rh1s240ppsfoacogzr7j',}, 
+          { positions: [ { i: '12', j: 2 } ], css_id: 'tinytable_css_6h91z9yp99axwjb911hz',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 } ], css_id: 'tinytable_css_oanfiay1wxvyq4ma8t5q',}, 
+          { positions: [ { i: '0', j: 2 } ], css_id: 'tinytable_css_s4a0uyxgdvw0wj66e5c8',}, 
+          { positions: [ { i: '19', j: 1 } ], css_id: 'tinytable_css_mk0wob09xzaep9xh7onq',}, 
+          { positions: [ { i: '12', j: 1 } ], css_id: 'tinytable_css_cg4z6pvdukxdnsoux0ux',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 } ], css_id: 'tinytable_css_iosh4wcrhyqskndllpcj',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_sfba3cjvz3ie17roi2gh',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_6e5l492nrf1bofqzmus1.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_6e5l492nrf1bofqzmus1 td.tinytable_css_rh1s240ppsfoacogzr7j, #tinytable_6e5l492nrf1bofqzmus1 th.tinytable_css_rh1s240ppsfoacogzr7j {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_6e5l492nrf1bofqzmus1 td.tinytable_css_6h91z9yp99axwjb911hz, #tinytable_6e5l492nrf1bofqzmus1 th.tinytable_css_6h91z9yp99axwjb911hz {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_6e5l492nrf1bofqzmus1 td.tinytable_css_oanfiay1wxvyq4ma8t5q, #tinytable_6e5l492nrf1bofqzmus1 th.tinytable_css_oanfiay1wxvyq4ma8t5q { text-align: center }
+    #tinytable_6e5l492nrf1bofqzmus1 td.tinytable_css_s4a0uyxgdvw0wj66e5c8, #tinytable_6e5l492nrf1bofqzmus1 th.tinytable_css_s4a0uyxgdvw0wj66e5c8 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_6e5l492nrf1bofqzmus1 td.tinytable_css_mk0wob09xzaep9xh7onq, #tinytable_6e5l492nrf1bofqzmus1 th.tinytable_css_mk0wob09xzaep9xh7onq {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_6e5l492nrf1bofqzmus1 td.tinytable_css_cg4z6pvdukxdnsoux0ux, #tinytable_6e5l492nrf1bofqzmus1 th.tinytable_css_cg4z6pvdukxdnsoux0ux {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_6e5l492nrf1bofqzmus1 td.tinytable_css_iosh4wcrhyqskndllpcj, #tinytable_6e5l492nrf1bofqzmus1 th.tinytable_css_iosh4wcrhyqskndllpcj { text-align: left }
+    #tinytable_6e5l492nrf1bofqzmus1 td.tinytable_css_sfba3cjvz3ie17roi2gh, #tinytable_6e5l492nrf1bofqzmus1 th.tinytable_css_sfba3cjvz3ie17roi2gh {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_6e5l492nrf1bofqzmus1" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        <caption>Regresión Lineal: PP y educación</caption>
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">(1)</th>
+              </tr>
+        </thead>
+        <tfoot><tr><td colspan="2">+ p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td></tr></tfoot>
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">(Intercept)</td>
+                  <td data-row="1" data-col="2">1.663***</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">(0.034)</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">educacionBasica Incompleta</td>
+                  <td data-row="3" data-col="2">0.338***</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">(0.067)</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">educacionBasica Completa</td>
+                  <td data-row="5" data-col="2">0.196**</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1"></td>
+                  <td data-row="6" data-col="2">(0.061)</td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">educacionMedia Incompleta</td>
+                  <td data-row="7" data-col="2">0.682***</td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1"></td>
+                  <td data-row="8" data-col="2">(0.050)</td>
+                </tr>
+                <tr>
+                  <td data-row="9" data-col="1">educacionMedia Completa</td>
+                  <td data-row="9" data-col="2">0.656***</td>
+                </tr>
+                <tr>
+                  <td data-row="10" data-col="1"></td>
+                  <td data-row="10" data-col="2">(0.057)</td>
+                </tr>
+                <tr>
+                  <td data-row="11" data-col="1">educacionEducacion Superior</td>
+                  <td data-row="11" data-col="2">1.115***</td>
+                </tr>
+                <tr>
+                  <td data-row="12" data-col="1"></td>
+                  <td data-row="12" data-col="2">(0.194)</td>
+                </tr>
+                <tr>
+                  <td data-row="13" data-col="1">Num.Obs.</td>
+                  <td data-row="13" data-col="2">2170</td>
+                </tr>
+                <tr>
+                  <td data-row="14" data-col="1">R2</td>
+                  <td data-row="14" data-col="2">0.107</td>
+                </tr>
+                <tr>
+                  <td data-row="15" data-col="1">R2 Adj.</td>
+                  <td data-row="15" data-col="2">0.105</td>
+                </tr>
+                <tr>
+                  <td data-row="16" data-col="1">AIC</td>
+                  <td data-row="16" data-col="2">5581.1</td>
+                </tr>
+                <tr>
+                  <td data-row="17" data-col="1">BIC</td>
+                  <td data-row="17" data-col="2">5620.8</td>
+                </tr>
+                <tr>
+                  <td data-row="18" data-col="1">Log.Lik.</td>
+                  <td data-row="18" data-col="2">-2783.529</td>
+                </tr>
+                <tr>
+                  <td data-row="19" data-col="1">RMSE</td>
+                  <td data-row="19" data-col="2">0.87</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+      Sin estudios  Basica Incompleta    Basica Completa   Media Incompleta 
+               658                232                298                589 
+    Media Completa Educacion Superior 
+               372                 21 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+-999 -888    1    2    3    4    5    6    7    8    9   10 
+   8    7  177 2105 1717 2370 5302  671 2256 1087 2038  297 </code></pre>
+</div>
+</div>
+<p>Una vez realizados los códigos correspondientes, se analiza que el impacto del nivel educacional en la partipación política de la juventud, con una estimación de un modelo de regresión lineal por mínimos cuadrados ordinarios. Dado que la educación es una variable categórica, el programa R seleccionó el nivel de “sin estudios” como la categoría de referencia. Por lo cual, se realizaran algunas comparaciones en base a esta.</p>
+<p>En primer lugar, el intercepto del modelo, el cual corresponde a B = 1.663, con un p&lt;0.001, representa el promedio estimado de participación política para aquellos jóvenes que no poseen ningún tipo de estudios. Siendo el valor de comparación contra el cual se evalúan los demás niveles educativos correspondientes.</p>
+</section>
+</section>
+<section id="efectos-por-nivel-educativo" class="level3">
+<h3 class="anchored" data-anchor-id="efectos-por-nivel-educativo">Efectos por nivel educativo</h3>
+<ol type="1">
+<li>Educación básica: Los jóvenes con educación basica incompleta aumentan su participacion en 0.338 puntos, mientras que quienes alcanzaron la basica completa muestran un aumento de 0.196 puntos</li>
+<li>Educación media: Dentro de los valores, se observa un salto importante en la enseñanza media, ya que los jóvenes con media incompleta participan 0.682 puntos más, y aquellos con media completa aumentan en 0.656 puntos respecto al grupo</li>
+<li>Educación superior: Este nivel nos presenta el impacto más fuerte y marcado de todo el modelo. Ya que, los jóvenes que accedieron a la educación superior incrementan su participación política en 1.115 puntos respecto a los jóvenes sin estudios.</li>
+</ol>
+<p>Por otro lado, el poder explicativo del R2, el cual corresponde a 0.107, determina e indica que el nivel educacional por sí solo explica el 10.7% de la variablidad en la participación juvenil.</p>
+<p>Por lo cual, los datos nos presentan de forma contundente que el nivel educacional es un predictor estadísticamente significativo para entender el comportamiento de la variable dependiente en los jovenes de 18 a 29 años. Esto, puede estar relacionado a que a medida que los jóvenes avanzan en su trayectoría educativa, experimentan una transformación sustantiva en sus destrezas cognitivas y su exposición a discursos políticos.</p>
+<p>Debemos considerar, que el colegio y organismos de educación superior no solo instruyen, sino que amplían el tejido social de los sujetos, insertándolos en redes mas densas y diversas permitiendo así una mayor participación y pensamiento político.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="modelo-2-sexo" class="level4">
+<h4 class="anchored" data-anchor-id="modelo-2-sexo">Modelo 2: Sexo</h4>
+<p>En segundo lugar, se incorporara la variable sexo al modelo. Esta adición se justifica por la necesidad de evaluar si las diferencias en la participación política estan influenciadas por brechas de género persistentes en la socialización política juvenil, verificando si el efecto de la educación se mantiene constante tras controlar por esta variable.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>En esta muestra de jóvenes, el sexo no es una variable estadísticamente significativa (0.087) para explicar el nivel de participación. Ya que, controlando por educación, hombres y mujeres jóvenes participan practicamente al mismo nivel, suponiendo así que el género no genera una brecha real por si sola.</p>
+<p>Sin embargo, hay un punto llamativo en los coeficientes de la educación al integrar la variable sexo. Ya que, aunque los números se movieron un poco, la educación superior (por ejemplo), bajo de 1.115 a 0.898, aunque siguen siendo positivos y significativos. Esto nos demuestra, que el impacto de la educación es robusto, significando asi que la variable tiene un efecto real por sí mismo en la vida de los jóvenes y no escondida en un efecto de género.</p>
+<p>Por otro lado, existe un detalle en la muestra, debido a que el modelo 1 tiene 2.170 personas y en el modelo 2 hay 1.643 personas. Lo cual, representa los valores perdidos en la variable sexo, donde posiblemente hubieron jovenes que en la pregunta no respondieron. Por lo que, al cambiar de manera drastica el grupo de personas, el calculo de la varianza cambia por completo, por lo cual el R2 baja a 0.047, calculando asi el modelo nuevo con una submuestra más pequeña y homogénea.</p>
+</section>
+<section id="modelo-3-edad" class="level4">
+<h4 class="anchored" data-anchor-id="modelo-3-edad">Modelo 3: Edad</h4>
+<p>Finalmente, el tercer modelo integra la variable edad. Dado que el comportamiento y el interés político suelen transformarse a medida que los jóvenes transitan hacia la adultez y adquieren mayores responsabilidades ciudadanas. Por lo cual, controlar por la edad permite asegurar que el efecto de la educación no es un mero reflejo de la madurez cronológica del encuestado</p>
+<div class="cell">
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_9qb0bdurzksiws44xi4f = TinyTable.createTableFunctions("tinytable_9qb0bdurzksiws44xi4f");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '23', j: 2 }, { i: '23', j: 3 }, { i: '23', j: 4 } ], css_id: 'tinytable_css_k9qm893av2mi1uv68qr6',}, 
+          { positions: [ { i: '16', j: 2 }, { i: '16', j: 3 }, { i: '16', j: 4 } ], css_id: 'tinytable_css_p7n5fr68h7ucw75zqwmi',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '22', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 }, { i: '20', j: 3 }, { i: '21', j: 3 }, { i: '22', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '13', j: 4 }, { i: '14', j: 4 }, { i: '15', j: 4 }, { i: '17', j: 4 }, { i: '18', j: 4 }, { i: '19', j: 4 }, { i: '20', j: 4 }, { i: '21', j: 4 }, { i: '22', j: 4 } ], css_id: 'tinytable_css_8bxz7f4t8cb3bpkkgdf0',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 } ], css_id: 'tinytable_css_evoxybxebt4gxn3wbeaq',}, 
+          { positions: [ { i: '23', j: 1 } ], css_id: 'tinytable_css_rcollwpn9t6aahfxytp6',}, 
+          { positions: [ { i: '16', j: 1 } ], css_id: 'tinytable_css_9i25p9e0byxvrppu4nap',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '22', j: 1 } ], css_id: 'tinytable_css_a0mj6avcd858w2vfoh06',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_ra71psv81abcu0qzhl0z',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_9qb0bdurzksiws44xi4f.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_9qb0bdurzksiws44xi4f td.tinytable_css_k9qm893av2mi1uv68qr6, #tinytable_9qb0bdurzksiws44xi4f th.tinytable_css_k9qm893av2mi1uv68qr6 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_9qb0bdurzksiws44xi4f td.tinytable_css_p7n5fr68h7ucw75zqwmi, #tinytable_9qb0bdurzksiws44xi4f th.tinytable_css_p7n5fr68h7ucw75zqwmi {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_9qb0bdurzksiws44xi4f td.tinytable_css_8bxz7f4t8cb3bpkkgdf0, #tinytable_9qb0bdurzksiws44xi4f th.tinytable_css_8bxz7f4t8cb3bpkkgdf0 { text-align: center }
+    #tinytable_9qb0bdurzksiws44xi4f td.tinytable_css_evoxybxebt4gxn3wbeaq, #tinytable_9qb0bdurzksiws44xi4f th.tinytable_css_evoxybxebt4gxn3wbeaq {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_9qb0bdurzksiws44xi4f td.tinytable_css_rcollwpn9t6aahfxytp6, #tinytable_9qb0bdurzksiws44xi4f th.tinytable_css_rcollwpn9t6aahfxytp6 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_9qb0bdurzksiws44xi4f td.tinytable_css_9i25p9e0byxvrppu4nap, #tinytable_9qb0bdurzksiws44xi4f th.tinytable_css_9i25p9e0byxvrppu4nap {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_9qb0bdurzksiws44xi4f td.tinytable_css_a0mj6avcd858w2vfoh06, #tinytable_9qb0bdurzksiws44xi4f th.tinytable_css_a0mj6avcd858w2vfoh06 { text-align: left }
+    #tinytable_9qb0bdurzksiws44xi4f td.tinytable_css_ra71psv81abcu0qzhl0z, #tinytable_9qb0bdurzksiws44xi4f th.tinytable_css_ra71psv81abcu0qzhl0z {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_9qb0bdurzksiws44xi4f" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        <caption>Modelos de Regresión Lineal OLS Comparados (Tres Modelos)</caption>
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">Modelo 1</th>
+                <th scope="col" data-row="0" data-col="3">Modelo 2</th>
+                <th scope="col" data-row="0" data-col="4">Modelo 3</th>
+              </tr>
+        </thead>
+        <tfoot><tr><td colspan="4">+ p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td></tr></tfoot>
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">(Intercepto): Sin estudios / Hombre / 0 años</td>
+                  <td data-row="1" data-col="2">1.663***</td>
+                  <td data-row="1" data-col="3">1.841***</td>
+                  <td data-row="1" data-col="4">2.481***</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">(0.034)</td>
+                  <td data-row="2" data-col="3">(0.067)</td>
+                  <td data-row="2" data-col="4">(0.279)</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">Básica Incompleta</td>
+                  <td data-row="3" data-col="2">0.338***</td>
+                  <td data-row="3" data-col="3">0.450***</td>
+                  <td data-row="3" data-col="4">0.432***</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">(0.067)</td>
+                  <td data-row="4" data-col="3">(0.106)</td>
+                  <td data-row="4" data-col="4">(0.106)</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">Básica Completa</td>
+                  <td data-row="5" data-col="2">0.196**</td>
+                  <td data-row="5" data-col="3">0.181+</td>
+                  <td data-row="5" data-col="4">0.208*</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1"></td>
+                  <td data-row="6" data-col="2">(0.061)</td>
+                  <td data-row="6" data-col="3">(0.099)</td>
+                  <td data-row="6" data-col="4">(0.099)</td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">Media Incompleta</td>
+                  <td data-row="7" data-col="2">0.682***</td>
+                  <td data-row="7" data-col="3">0.630***</td>
+                  <td data-row="7" data-col="4">0.605***</td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1"></td>
+                  <td data-row="8" data-col="2">(0.050)</td>
+                  <td data-row="8" data-col="3">(0.079)</td>
+                  <td data-row="8" data-col="4">(0.079)</td>
+                </tr>
+                <tr>
+                  <td data-row="9" data-col="1">Media Completa</td>
+                  <td data-row="9" data-col="2">0.656***</td>
+                  <td data-row="9" data-col="3">0.509***</td>
+                  <td data-row="9" data-col="4">0.551***</td>
+                </tr>
+                <tr>
+                  <td data-row="10" data-col="1"></td>
+                  <td data-row="10" data-col="2">(0.057)</td>
+                  <td data-row="10" data-col="3">(0.089)</td>
+                  <td data-row="10" data-col="4">(0.091)</td>
+                </tr>
+                <tr>
+                  <td data-row="11" data-col="1">Educación Superior</td>
+                  <td data-row="11" data-col="2">1.115***</td>
+                  <td data-row="11" data-col="3">0.898**</td>
+                  <td data-row="11" data-col="4">0.963***</td>
+                </tr>
+                <tr>
+                  <td data-row="12" data-col="1"></td>
+                  <td data-row="12" data-col="2">(0.194)</td>
+                  <td data-row="12" data-col="3">(0.279)</td>
+                  <td data-row="12" data-col="4">(0.280)</td>
+                </tr>
+                <tr>
+                  <td data-row="13" data-col="1">Mujer (vs. Hombre)</td>
+                  <td data-row="13" data-col="2"></td>
+                  <td data-row="13" data-col="3">0.087</td>
+                  <td data-row="13" data-col="4">0.080</td>
+                </tr>
+                <tr>
+                  <td data-row="14" data-col="1"></td>
+                  <td data-row="14" data-col="2"></td>
+                  <td data-row="14" data-col="3">(0.059)</td>
+                  <td data-row="14" data-col="4">(0.059)</td>
+                </tr>
+                <tr>
+                  <td data-row="15" data-col="1">Edad (en años)</td>
+                  <td data-row="15" data-col="2"></td>
+                  <td data-row="15" data-col="3"></td>
+                  <td data-row="15" data-col="4">-0.026*</td>
+                </tr>
+                <tr>
+                  <td data-row="16" data-col="1"></td>
+                  <td data-row="16" data-col="2"></td>
+                  <td data-row="16" data-col="3"></td>
+                  <td data-row="16" data-col="4">(0.011)</td>
+                </tr>
+                <tr>
+                  <td data-row="17" data-col="1">Num.Obs.</td>
+                  <td data-row="17" data-col="2">2170</td>
+                  <td data-row="17" data-col="3">1643</td>
+                  <td data-row="17" data-col="4">1643</td>
+                </tr>
+                <tr>
+                  <td data-row="18" data-col="1">R2</td>
+                  <td data-row="18" data-col="2">0.107</td>
+                  <td data-row="18" data-col="3">0.047</td>
+                  <td data-row="18" data-col="4">0.050</td>
+                </tr>
+                <tr>
+                  <td data-row="19" data-col="1">R2 Adj.</td>
+                  <td data-row="19" data-col="2">0.105</td>
+                  <td data-row="19" data-col="3">0.044</td>
+                  <td data-row="19" data-col="4">0.046</td>
+                </tr>
+                <tr>
+                  <td data-row="20" data-col="1">AIC</td>
+                  <td data-row="20" data-col="2">5581.1</td>
+                  <td data-row="20" data-col="3">5240.9</td>
+                  <td data-row="20" data-col="4">5237.3</td>
+                </tr>
+                <tr>
+                  <td data-row="21" data-col="1">BIC</td>
+                  <td data-row="21" data-col="2">5620.8</td>
+                  <td data-row="21" data-col="3">5284.1</td>
+                  <td data-row="21" data-col="4">5285.9</td>
+                </tr>
+                <tr>
+                  <td data-row="22" data-col="1">Log.Lik.</td>
+                  <td data-row="22" data-col="2">-2783.529</td>
+                  <td data-row="22" data-col="3">-2612.441</td>
+                  <td data-row="22" data-col="4">-2609.637</td>
+                </tr>
+                <tr>
+                  <td data-row="23" data-col="1">RMSE</td>
+                  <td data-row="23" data-col="2">0.87</td>
+                  <td data-row="23" data-col="3">1.19</td>
+                  <td data-row="23" data-col="4">1.18</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+<p>Dentro del modelo 3, el coeficiente de la edad se encuetra en -0.026. Lo cual, significa que a medida que los jóvenes cumplen más años, el nivel de participación disminuye levemente. Lo que resulta interesante debido a que durante la juventud temprana, los sujetos suelen estar mas vinculados a movilizaciones estudiantiles o espacios de alta efervescencia colectiva. Sin embargo, a medida que avanzan los años, entran al mercado laboral, asumiendo responsabilidades económicas o familiares, lo cual estaría relacionado a la domesticación, lo que reduce el tiempo disponible para invlucrarse en el espacio público</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="conclusión-general-de-los-modelos-de-regresión" class="level3">
+<h3 class="anchored" data-anchor-id="conclusión-general-de-los-modelos-de-regresión">Conclusión general de los modelos de regresión</h3>
+<p>El análisis de los tres modelos de regresión lineal proporciona un respaldo empírico fundamental a los planteamientos teóricos vistos en la primera parte de esta investigación, permitiendo operacionalizar como la trayectoría educativa con la formación ciudadana, se traduce en un comportamiento político activo en las juventudes chilenas.</p>
+<p>En primer lugar, los resultados validan la premisa de que el paso por el sistema escolar y superior no se limita a una transmisión instrumental de contenidos, sino que actúa como el catalizador de las “bases de la participación política” (mencionado en la primera investigación). La progresión positiva y altamente significativa de los coeficientes educativos respecto a la categoría base correspondiente a “sin estudios”, demuestra que a mayor exposición al sistema de la educación ciudadana, mayor es el involucramiento de los jóvenes. Esto cobra un sentido profundo a la luz de la ley 20.911, ya que cada peldaño educativo alcanzado representa una mayor acumulación de estas competencias cognitivas y disposiciones actitudinales que presenta la ley, tal como; fomentar la participación en temas de interés público.</p>
+<p>Según los datos presentados, el impacto alcanza su cénit en el nivel de educación superior con un B de 0.963, consolidándose como un espacio institucional más potente para el desarrollo de una ciudadanía crítica, responsable y abierta, tal como estipulan los objetivos de la ley. Esto ocurre, ya que el tránsito por la educación superior potencia la capacidad de deliberación y la autoeficacia, dotando a los sujetos de la confianza necesaria para involucrarse activamente en la esfera pública, lo cual según Habermas corresponde a “un espacio social, donde se tematiza, se manifiesta y se conversan los temas de interés políticos” <span class="citation" data-cites="habermas">Habermas (<a href="#ref-habermas" role="doc-biblioref">n.d.</a>)</span></p>
+<p>En segundo lugar, el análisis de variables demográficas de control enriquece la discusión sobre el contexto de los jovenes en Chile. Ya que, por un lado, que la variable de sexo no resulte estadísticamente significativa sugiere que los planes de formación ciudadana y la competencia transmitidas por el sistema escolar operan de manera transversal. Por lo que, la educación cívica actual en Chile parece actuar como un factor de igualación que neutraliza brechas de género, debido a que promueve las disposiciones hacia la participación de forma homogénea en hombres y mujeres jóvenes.</p>
+<p>Por otro lado, el hallazgo de un efecto significativo y negativo en la edad, dialoga directamente con lo planteado por Alscher (parte I), quienes rescatan que las actitudes políticas se manifiestan con fuerza durante la adolescencia y juventud temprana. En nuestro país, este tramo inicial coincida con la salida del espacio escolar a un tránsito universitario, donde existen momentos de alta efervescencia donde se comienzan a expresar nuevas formas de involucramiento que van más allá de mecanismos tradicionales. Sin embargo, a medida que los jóvenes avanzan en su edad, la inserción al mercado laborar y nuevas responsabilidades adultas parecen generar un efecto de repliegue o desgaste al impulso cívico inicial, reduciendo sutilmente los niveles de participación.</p>
+<p>Por lo cual, los modelos de regresión confirman que el espíritu de la Ley 20.911 se sostiene. Es de suma relevancia, considerar que el sistema educativo formal es el vector estructural determinante para robustecer la motivación y las habilidades necesarias para la visa. Y, aunque las dinámicas de la edad impongan barreras temporales al avanzar los años, la acumulación de experiencias formativas permanece como un pilar fundamental que sostiene el compromiso democrático y define las diversas formas de comportamiento político en la juventud chilena</p>
+</section>
+</section>
+<section id="regresión-logística" class="level2">
+<h2 class="anchored" data-anchor-id="regresión-logística">Regresión logística</h2>
+<p>La regresión logística es una técnica de análisis multivariado que se utiliza cuando la variable dependiente es dicotómica, es decir, cuando solo puede tomar dos valores, generalmente representados como 0 y 1. Según Chitarroni (2002), este modelo tiene un propósito tanto explicativo como predictivo, ya que permite estimar la probabilidad de que ocurra un determinado evento, y, al mismo tiempo, identificar cuáles variables influyen en el aumento o disminución de ciha probabilidad. <span class="citation" data-cites="chitarroni2002">Chitarroni (<a href="#ref-chitarroni2002" role="doc-biblioref">2002</a>)</span></p>
+<p>Los resultados se presentan mediante odds ratios. De acuerdo con Chitarroni (2002), un odds ratio giual a 1 indica que la variable no produce cambios en la probabilidad del evento. Ya que, valores superiores a 1 indican un aumento de las probabilidades de asistir a marchas, mientras que valores inferiores a 1 indican una disminucion de dichas probabilidades. Asimismo, la significación estadística permite determinar si el efecto observado es suficientemente consistente como para descartar que se deba al azar. <span class="citation" data-cites="chitarroni2002">Chitarroni (<a href="#ref-chitarroni2002" role="doc-biblioref">2002</a>)</span></p>
+<p>Por lo tanto, en simples palabras: este modelo permite identificar qué características sociodemográficas se asocian con una mayor o menor probabilidad de participacion en marchas, manteniendo constantes las demas variables incluidas en el analisis.</p>
+<section id="cuáles-son-las-variables-independientes" class="level4">
+<h4 class="anchored" data-anchor-id="cuáles-son-las-variables-independientes">¿Cuáles son las variables independientes?</h4>
+<p>Para cumplir con lo que exige la pauta, se dejaron exactamente las mismas variables utilizadas anteriormente para que la comparación sea más limpia.</p>
+<ol type="1">
+<li>Educación: Es una variable categórica que dentro de la base de datos va desde sin estudios hasta la educación superior.</li>
+<li>Sexo: Variable dicotómica de hombre o mujer</li>
+<li>Edad: Corresponde a una variable continua, en donde se escogió la edad de 18 a 29 años</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_njilg040fjg8vr2ir4qn = TinyTable.createTableFunctions("tinytable_njilg040fjg8vr2ir4qn");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '21', j: 2 } ], css_id: 'tinytable_css_vbsepxp2od74nkenvktn',}, 
+          { positions: [ { i: '16', j: 2 } ], css_id: 'tinytable_css_pn5rr4npbw6fy9y8l0qt',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 } ], css_id: 'tinytable_css_oi6pswns4c7wnq81kvcq',}, 
+          { positions: [ { i: '0', j: 2 } ], css_id: 'tinytable_css_rylmcmlvwb03zv7bnv8p',}, 
+          { positions: [ { i: '21', j: 1 } ], css_id: 'tinytable_css_xx66uu6u82rn200etkg4',}, 
+          { positions: [ { i: '16', j: 1 } ], css_id: 'tinytable_css_yucic1cf98xwcti7mkrg',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 } ], css_id: 'tinytable_css_qj7jshimvoaqoydchu42',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_aiy0my3yz9kq5z1c5p7v',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_njilg040fjg8vr2ir4qn.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_njilg040fjg8vr2ir4qn td.tinytable_css_vbsepxp2od74nkenvktn, #tinytable_njilg040fjg8vr2ir4qn th.tinytable_css_vbsepxp2od74nkenvktn {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_njilg040fjg8vr2ir4qn td.tinytable_css_pn5rr4npbw6fy9y8l0qt, #tinytable_njilg040fjg8vr2ir4qn th.tinytable_css_pn5rr4npbw6fy9y8l0qt {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_njilg040fjg8vr2ir4qn td.tinytable_css_oi6pswns4c7wnq81kvcq, #tinytable_njilg040fjg8vr2ir4qn th.tinytable_css_oi6pswns4c7wnq81kvcq { text-align: center }
+    #tinytable_njilg040fjg8vr2ir4qn td.tinytable_css_rylmcmlvwb03zv7bnv8p, #tinytable_njilg040fjg8vr2ir4qn th.tinytable_css_rylmcmlvwb03zv7bnv8p {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_njilg040fjg8vr2ir4qn td.tinytable_css_xx66uu6u82rn200etkg4, #tinytable_njilg040fjg8vr2ir4qn th.tinytable_css_xx66uu6u82rn200etkg4 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_njilg040fjg8vr2ir4qn td.tinytable_css_yucic1cf98xwcti7mkrg, #tinytable_njilg040fjg8vr2ir4qn th.tinytable_css_yucic1cf98xwcti7mkrg {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_njilg040fjg8vr2ir4qn td.tinytable_css_qj7jshimvoaqoydchu42, #tinytable_njilg040fjg8vr2ir4qn th.tinytable_css_qj7jshimvoaqoydchu42 { text-align: left }
+    #tinytable_njilg040fjg8vr2ir4qn td.tinytable_css_aiy0my3yz9kq5z1c5p7v, #tinytable_njilg040fjg8vr2ir4qn th.tinytable_css_aiy0my3yz9kq5z1c5p7v {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_njilg040fjg8vr2ir4qn" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        <caption>Regresión Logística para la Probabilidad de Participación en Marchas</caption>
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">Modelo 4: Logístico (OR)</th>
+              </tr>
+        </thead>
+        <tfoot><tr><td colspan="2">+ p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td></tr></tfoot>
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">(Intercepto)</td>
+                  <td data-row="1" data-col="2">0.793</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">(0.348)</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">Básica Incompleta</td>
+                  <td data-row="3" data-col="2">1.559**</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">(0.260)</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">Básica Completa</td>
+                  <td data-row="5" data-col="2">1.305+</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1"></td>
+                  <td data-row="6" data-col="2">(0.208)</td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">Media Incompleta</td>
+                  <td data-row="7" data-col="2">2.663***</td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1"></td>
+                  <td data-row="8" data-col="2">(0.332)</td>
+                </tr>
+                <tr>
+                  <td data-row="9" data-col="1">Media Completa</td>
+                  <td data-row="9" data-col="2">2.806***</td>
+                </tr>
+                <tr>
+                  <td data-row="10" data-col="1"></td>
+                  <td data-row="10" data-col="2">(0.397)</td>
+                </tr>
+                <tr>
+                  <td data-row="11" data-col="1">Educación Superior</td>
+                  <td data-row="11" data-col="2">3.778**</td>
+                </tr>
+                <tr>
+                  <td data-row="12" data-col="1"></td>
+                  <td data-row="12" data-col="2">(1.698)</td>
+                </tr>
+                <tr>
+                  <td data-row="13" data-col="1">Mujer (vs. Hombre)</td>
+                  <td data-row="13" data-col="2">0.775**</td>
+                </tr>
+                <tr>
+                  <td data-row="14" data-col="1"></td>
+                  <td data-row="14" data-col="2">(0.072)</td>
+                </tr>
+                <tr>
+                  <td data-row="15" data-col="1">Edad (en años)</td>
+                  <td data-row="15" data-col="2">0.969+</td>
+                </tr>
+                <tr>
+                  <td data-row="16" data-col="1"></td>
+                  <td data-row="16" data-col="2">(0.017)</td>
+                </tr>
+                <tr>
+                  <td data-row="17" data-col="1">Num.Obs.</td>
+                  <td data-row="17" data-col="2">2169</td>
+                </tr>
+                <tr>
+                  <td data-row="18" data-col="1">AIC</td>
+                  <td data-row="18" data-col="2">2739.2</td>
+                </tr>
+                <tr>
+                  <td data-row="19" data-col="1">BIC</td>
+                  <td data-row="19" data-col="2">2784.7</td>
+                </tr>
+                <tr>
+                  <td data-row="20" data-col="1">Log.Lik.</td>
+                  <td data-row="20" data-col="2">-1361.608</td>
+                </tr>
+                <tr>
+                  <td data-row="21" data-col="1">RMSE</td>
+                  <td data-row="21" data-col="2">0.47</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+</section>
+<section id="resultados" class="level4">
+<h4 class="anchored" data-anchor-id="resultados">Resultados</h4>
+<p>Se estimó una regresión logística para analizar los factores asociados a la probabilidad de participar en marchas. Donde la variable dependiente fue recodificada de forma dicotomica, donde 0 corresponde a quienes nunca participan en marchas y 1 a quienes participan al menos alguna vez. De acuerdo con <span class="citation" data-cites="chitarroni2002">Chitarroni (<a href="#ref-chitarroni2002" role="doc-biblioref">2002</a>)</span>, la regresión logística permite estimar la probabilidad de ocurrencia de un evento y determinar el peso que tienen distintas variables independientes sobre dicha probabilidad.</p>
+<p>Los resultados nos indican que el nivel educativo es la variable que presenta la asociación mas importante con la participación en marchas. Tomando como categoría de referencia a las personas sin educación, quienes poseen educación superior presentan odds de participación 3.778 mayor. De igual manera, quienes tienen educación media completa presentan odds de 2.81 veces mayores. Estos resultados nos sugieren que, a medida que aumenta el nivel educativo, también aumenta la probabilidad de participar en marchas.</p>
+<p>Respecto al sexo, las mujeres presentan menores odds de participacion que los hombres con un odds de 0.775, lo que indica una reduccion del 24,5 en las odds de participar en marchas en comparación con los hombres manteniendo constantes las demás variables del modelo.</p>
+<p>En cuanto la edad, se observa una asociación negativa, lo que implica que por cada año adicional de edad los odds de participar en marchas disminuyen aproximadamente un 3,1%.</p>
+<p>En términos generales, los resultados respaldan la idea de que la educación constituye un factor relevante para la participación política y el compromiso cívico. En este sentido, los hallazgos son coherentes con los objetivos planteados por la ley 20.911, particularmente aquellos orientados a fomentar una ciudadania critica, responsable y participativa, asi como a promover el interés de los estudiantes por los asuntos públicos. Si bien el modelo mide el nivel educativo y no directamente la educación cívica, la asociación positiva observada entre educación y participación en marchas sugiere que los procesos educativos pueden contribuir al desarrollo de habilidades, conocimientos y disposiciones que favorecen el involucramiento ciudadano en la vida democratica. De esta manera, los resultados refuerzan la relevancia de la formación ciudadana como herramienta para promover una participación política activa dentro de la sociedad, al igual que un pensamiento crítico dentro de las juventudes</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/grafico-logistico-predichos-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-chitarroni2002" class="csl-entry" role="listitem">
+Chitarroni, Horacio. 2002. <em>La Regresión Logística</em>. December. <a href="http://www.salvador.edu.ar/csoc/idicso">http://www.salvador.edu.ar/csoc/idicso</a>.
+</div>
+<div id="ref-habermas" class="csl-entry" role="listitem">
+Habermas, Jurgen. n.d. <em>Sobre El Papel de La Sociedad Civil y de La Opinión Pública</em>.
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
