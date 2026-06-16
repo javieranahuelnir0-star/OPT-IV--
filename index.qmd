@@ -1,0 +1,175 @@
+---
+title: "Trabajo 3"
+author: "Javiera Nahuelñir"
+date: 25-05
+format: html
+editor: visual
+bibliography: referencias.bib
+---
+
+## La educación cívica parte III.
+
+La educación cívica ha sido comprendida como un conjunto de conocimientos, habilidades y disposiciones orientadas a la formación de ciudadanos capaces de participar de manera informada y activa en la vida democrática. En este ámbito, no solo implica la adquisión de información sobre contenidos de instituciones políticas participantes dentro de nuestro país, sino que también el desarrollo de actitudes vinculadas al compromiso cívico y la participación política.
+
+En el caso de nuestro país, la importancia de la educación cívica ha sido reconocida institucionalmente mediante La Ley 20.911, promulgada en el 2016, durante el gobierno de Michelle Bachelet, la cual establece la implementación obligatoria de planes de formación ciudadana en los establecimientos educacionales . Esta ley cuenta con 9 objetivos principales, que sin embargo, 3 serán relevantes en esta investigación. Los cuales indican que La Ley 20.911 tiene como propositó:
+
+“Fomentar en los estudiantes el ejercico de una ciudadanía crítica, responsable, respetuosa, abierta y creativa”; “Promover el conocimiento, comprensión y análisis del Estado de Derecho y de la institucionalidad local, regional y nacional, y la formación de virtudes cívicas en los estudiantes”; “Fomentar la participación de los estudiantes en temas de interés público” ([*Ley 20.911*, n.d.](https://javieranahuelnir0-star.github.io/OPT.E-C/#ref-ley20.911))
+
+```{r}
+#| echo: FALSE
+#| message: false
+#| warning: false
+
+library(haven)
+library(dplyr)
+library(ggplot2)
+library(knitr)
+library(psych)
+library(corrplot)
+library(reshape2)
+
+
+datos <- read_sav("C:/Users/Eliezer/Desktop/Trabajo 3 OPT/input/ELSOC20162022.sav")
+```
+
+```{r}
+# renombrar variables
+data <- datos %>% 
+  rename(
+    interes_politica = c13,
+    edad = m0_edad,
+    educacion = m01,
+    participacion = c22,
+    asistencia_marchas = c08_02
+  ) %>%
+  select(edad, interes_politica, educacion, participacion, asistencia_marchas)
+
+# limpiar valores
+data <- data %>%
+  mutate(
+    interes_politica = ifelse(interes_politica < 0, NA, interes_politica),
+    participacion = ifelse(participacion < 0, NA, participacion),
+    asistencia_marchas = ifelse(asistencia_marchas < 0, NA, asistencia_marchas)
+  )
+
+# seleccionar edad
+data <- data %>%
+  filter(edad >= 18 & edad <= 29)
+
+# variables categóricas
+data$educacion <- as_factor(data$educacion)
+data$participacion <- as_factor(data$participacion)
+```
+
+### Construcción de un índice
+
+Para aproximarnos a lo que es la participación juvenil, se construirá un índice compuesto por variables asociadas al interés y al involucramiento político de los individuos. Específicamente, se utilizarán variables relacionadas con el interés en la política, la participación política y la asistencia a marchas o manifestaciones, ya que estas permiten captar distintas formas de involucramiento en los asuntos públicos, especialmente aquellas asociadas a formas no tradicionales de participación juvenil. La construcción de este índice, resulta pertinente para el trabajo debido a que permite operacionalizar el concepto de participación política juvenil, el cual constituye con una variable dependiente de estudio como fue mencionado en el trabajo I. De este modo, se busca sintetizar distintas expresiones de participación e involucramiento político presentes en los jóvenes, permitiendo posteriormente analizar su relación con variables asociadas a la educación cívica, particularmente el nivel educacional y la edad.
+
+```{r}
+# asegurarse de que las variables sean numéricas
+data <- data %>%
+  mutate(
+    interes_politica = as.numeric(interes_politica),
+    participacion = as.numeric(participacion),
+    asistencia_marchas = as.numeric(asistencia_marchas)
+  )
+
+# crear índice
+data <- data %>%
+  mutate(
+    participacion_politica = rowMeans(
+      select(., interes_politica, participacion, asistencia_marchas),
+      na.rm = TRUE
+    )
+  )
+
+# revisar índice
+head(data$participacion_politica)
+summary(data$participacion_politica)
+
+```
+
+### Alfa de Cronbach
+
+Con el fin de evaluar la consistencia interna del índice de participación política construido para esta investigación, se aplicará el coeficiente alfa de cronbach. Este estadístico, tal como se reviso en el ramo de estadística III, permite medir el grado de relación y coherencia existente entre las variables que componen un índice, evaluando si los distintos indicadores utilizados efectivamente logran representar una misma dimensión. Por lo que, el alfa de cronbach nos permitirá determinar si estas variables presentan un nivel adecuado de consistencia interna para ser integradas dentro de un mismo índice, fortaleciendo así la validez de la operacionalización de la participación política juvenil utilizada en la investigación.
+
+```{r}
+# generar objeto para revisar consistencia del índice
+indice <- data %>%
+  select(
+    interes_politica,
+    participacion,
+    asistencia_marchas
+  )
+
+alpha(indice)
+```
+
+El índice de participación política juvenil obtuvo un alfa de cronbach de 0.68, lo que evidencia un nivel de consistencia interna moderdamente aceptable entre variables que lo componen. Esto indica que las variables utilizadas como indicadores del índice presentan una relación estadística suficiente para ser integrados dentro de una misma dimensión analítica vinculada al involucramiento política juvenil. Si bien el valor obtenido no alcanza un nivel elevado de consistencia, puede explicarse por la naturaleza del fenómeno estudiado, ya que la participación política juvenil no constituye una práctica homogénea, sino que involucra tanto dimensiones actitudinales, como el interés por los asuntos políticos, así como formas de prácticas de asistencia a movilizaciones y otras formas de participación. En este sentido, las variables incorporadas no representan conductas idénticas, sino expresiones complementarias del involucramiento político juvenil. Por lo tanto, el valor observado, permite considerar el índice como metodológicamente aceptable para efectos analíticos dentro de esta investigación, considerando el carácter exploratorio del estudio y las limitaciones de la base de datos utilizada.
+
+### Correlación
+
+```{r}
+cor(
+  data %>%
+    select(
+      interes_politica,
+      participacion,
+      asistencia_marchas
+    ),
+  use = "complete.obs"
+)
+```
+
+Por otro lado, con el fin de analizar la relación existente entre las variables que componen el índice de participación política juvenil, se elaboró una matriz de correlaciones. Por lo que, en este caso, con el apoyo de esta herramienta estadística, se evidencia asociaciones positivas entre las variables consideradas, particularmente entre participación política y asistencia a marchas, lo que nos sugiere una relación estrecha entre ambas formas de involucramiento político juvenil.
+
+Para una mejor comprensión visual, los resultados son presentados gráficamente
+
+```{r}
+# crear matriz
+matriz <- cor(
+  data %>%
+    select(
+      interes_politica,
+      participacion,
+      asistencia_marchas
+    ),
+  use = "complete.obs"
+)
+
+matriz_long <- melt(matriz)
+
+# gráfico
+ggplot(matriz_long, aes(Var1, Var2, fill = value)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = round(value, 2)), size = 5) +
+  scale_fill_gradient2(
+    low = "white",
+    high = "steelblue",
+    midpoint = 0.5,
+    limits = c(0,1)
+  ) +
+  labs(
+    title = "Matriz de correlaciones",
+    x = "",
+    y = "",
+    fill = "Correlación"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    text = element_text(size = 12)
+  )
+```
+
+El gráfico nos permite visualizar la intensidad de la relación existente entre las variables que componen el índice de participación política juvenil. En esta representación, los colores mas oscuros nos indican correlaciones más atas, mientras que los tonos más claros representan relaciones más debiles. Asimismo, los valores presentados en cada cuadro expresan el coeficiente de correlación entre las variables, lo cual varía entre 0 y 1, donde los valores cercanos a 1 indican asociaciones fuertes.
+
+Por lo tanto, se observa que la relación más intensa corresponde a la existente entre participación política y asistencia a marchas como fue mencionado anteriormente, lo que evidencia que ambas variables presentan un comportamiento relativamente similar dentro de la población analizada, resultando coherente con la idea de que las formas de movilización colectiva constituyen expresiones relevantes de participación política juvenil. En términos analíticos, el gráfico nos aporta evidencia visual sobre la coherencia existente entre las variables incorporadas en el índice, respaldando la decisión metodológica de agruparlas dentro de una misma dimensión asociada a la participación política juvenil .
+
+### Relación en Chile con su pasado y actualidad
+
+Durante el 2019 surgió una gran movilización en el país la cual fue denominada como estallido social, en el cual el país se enfrentaba a un nuevo contexto democrático, donde los problemas y conflictos se expresaban en las calles. Dentro de este contexto, (autores), mencionan que el estallido social, "podría ser interpretada como el resultado de un progreso de repolitización de la juventud, y de la sociedad chilena en general, expresada en un resurgimiento del interés en la participación activa en asuntos políticos, caracterizado por un aumento de su implicación en movilizaciones, debates públicos y procesos democráticos" @bivort . En este sentido, dicho contexto resulta relevante para la presente investigación, ya que evidencia cómo las nuevas generaciones han desarrollado formas de participación que trascienden los mecanismos tradicionales e institucionales, tal como menciona un entrevistado dentro del paper: "existen diversas acciones que uno tiene a disposición para poder realizar....hoy día tenemos la oportunidad por ejemplo de dar nuestra opinión a través de los medios...... otra acción es participar de las marchas sociales, participar en los grupos u organizaciones dentro de la universidad, entre otros. Para ser un buen ciudadano, en definitiva, la única forma de marcar una diferencia es a nivel individual, intentando ser un buen ciudadano" @bivort . Esta idea, nos permite comprender cómo la ciudadanía no se limita únicamente al ejercicio formal del voto, sino que también involucra disposiciones subjetivas orientadas al involucramiento en los asuntos públicos y colectivos. En relación con la investigación, esta perspectiva resulta realmente interesante debido a que el índice construido busca aproximarse precisamente a dichas formas de involucramiento ciudadano, incorporando dimensiones asociadas al interés por la política, la participación política y la asistencia a marchas, de este modo. Asimismo, como un punto aparte, podemos vincularlo con la educación cívica en tanto esta no solo apunta a la transmisión de conocimientos sobre instituciones políticas, sino también al desarrollo de actitudes, disposiciones y prácticas orientadas a la participación democrática y al ejercicio activo de la ciudadanía.
+
+#### Bibliografía
+
+Bivort B & Martínez-Labrín S, (2023), Participación política juvenil en Chile neoliberal, Civilizar: Ciencias Sociales y Humanas, 23-44, undefined
